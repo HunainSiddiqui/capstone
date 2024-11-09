@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id        Int      @id @default(autoincrement())
+  fullname  String @default("Unknown")
+  email     String   @unique
+  password  String
+}
+
+model Prisoner {
+  id                      Int       @id @default(autoincrement())
+  prisonerId              String    @unique
+  dateOfBirth             DateTime
+  prisonLocation          String
+  crime                   String
+  securityQuestion        String
+  emergencyContact        String
+  inmateStatus            String
+  caseIdOrNumber          String    @unique
+  languagePreference      String
+
+  relationships           PrisonerLawyer[]
+
+}
+
+model Lawyer {
+  id                    Int       @id @default(autoincrement())
+  barRegistrationNumber String    @unique
+  firmName              String
+  clientAccessAuth      Boolean   @default(false)
+  accessLevel           String
+  casesSolved           Int       @default(0)
+  specializations       String[]
+  licenseVerified       Boolean   @default(false)
+  clientList            String[]
+  availability          String
+  professionalAffiliations String[]
+
+  relationships         PrisonerLawyer[]
+}
+
+model PrisonerLawyer {
+  id                  Int       @id @default(autoincrement())
+  prisonerId          Int
+  lawyerId            Int
+  relationshipStatus  String
+  appointmentHistory  String[]
+  caseStatus          String
+
+  prisoner            Prisoner @relation(fields: [prisonerId], references: [id])
+  lawyer              Lawyer   @relation(fields: [lawyerId], references: [id])
+}
