@@ -58,3 +58,16 @@ model PrisonerLawyer {
   prisoner            Prisoner @relation(fields: [prisonerId], references: [id])
   lawyer              Lawyer   @relation(fields: [lawyerId], references: [id])
 }
+
+model Applicant {
+  id             Int      @id @default(autoincrement())
+  applicantName  String
+  caseNumber     String
+  email          String   @unique
+  address        String
+  additionalInfo String?  // Optional field
+  file           String?  // Path or URL to the file, optional
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

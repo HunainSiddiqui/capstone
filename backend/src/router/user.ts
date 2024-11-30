@@ -50,7 +50,9 @@ router.post("/signup", async (req: Request, res: Response) => {
 
 router.post("/signin", async (req: Request, res: Response) => {
   const body = req.body;
+  console.log(body);
   const parsedData = SigninSchema.safeParse(body);
+  console.log(parsedData);
 
   if (!parsedData.success) {
     return res.status(411).json({

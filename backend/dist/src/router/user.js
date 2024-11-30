@@ -54,7 +54,9 @@ router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function*
 }));
 router.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
+    console.log(body);
     const parsedData = types_1.SigninSchema.safeParse(body);
+    console.log(parsedData);
     if (!parsedData.success) {
         return res.status(411).json({
             message: "The entered details are incorrect. Please verify them again.",

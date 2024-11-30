@@ -12,7 +12,12 @@ export function authMiddleware(
   res: Response,
   next: NextFunction
 ) {
-  const token = req.headers.authorization?.split(" ")[1]; // To get token after "Bearer <token>"
+
+
+  
+  
+  const token = req.cookies?.token; 
+  console.log(token);
 
   if (!token) {
     return res.status(403).json({

@@ -10,5 +10,5 @@ exports.SignupSchema = zod_1.z.object({
 //{email: "hunainsiddiqui93@gmail.com", password: "12345678", fullname: "Mohammad Hunain Siddiqui"}
 exports.SigninSchema = zod_1.z.object({
     email: zod_1.z.string().email(),
-    password: zod_1.z.string()
+    password: zod_1.z.string(),
 });

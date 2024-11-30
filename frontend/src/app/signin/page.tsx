@@ -6,6 +6,7 @@ import { BACKEND_URL } from "../config";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner"; 
 import Link from "next/link";
+import { cookies } from "next/headers";
 
 export default function Login() {
   const router = useRouter();
@@ -16,9 +17,13 @@ export default function Login() {
     e.preventDefault(); 
     try {
       const res = await axios.post(`${BACKEND_URL}/api/v1/user/signin`, {
-        username: email,
+        email: email,
         password,
       });
+
+      const token = res.data.token;
+      document.cookie = `token=${token}; path=/`;
+      
       toast.success("Login successful!"); 
       router.push("/dashboard"); 
     } catch (error) {
