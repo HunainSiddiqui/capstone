@@ -53,7 +53,8 @@ const BailApplicationPage = () => {
       setIsSubmitting(false); // Reset submitting state if validation fails
       return;
     }
-
+    const token = document.cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1];
+   
     try {
         const res = await axios.post(
           `${BACKEND_URL}/api/v1/bail`,
@@ -68,13 +69,14 @@ const BailApplicationPage = () => {
           {
             headers: {
               "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`, 
             },
           },
         );
-        if (res.data.success) {
+        if (res.status === 200) {
             setProgress(25);
             await generatePDF();
-            toast.success("Application submitted successfully!...");
+            await toast.success("Application submitted successfully!...");
           
         } else {
           toast.error("Unable to submit application. Please try again.");

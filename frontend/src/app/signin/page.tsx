@@ -16,13 +16,16 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); 
     try {
-      const res = await axios.post(`${BACKEND_URL}/api/v1/user/signin`, {
-        email: email,
-        password,
-      });
-
+      const res = await axios.post(
+        `${BACKEND_URL}/api/v1/user/signin`,
+        {
+          email: email,
+          password: password, // Explicitly include `password` for clarity
+        },
+      );
       const token = res.data.token;
       document.cookie = `token=${token}; path=/`;
+
       
       toast.success("Login successful!"); 
       router.push("/dashboard"); 

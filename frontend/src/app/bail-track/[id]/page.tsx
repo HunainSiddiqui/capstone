@@ -17,8 +17,17 @@ const BailTrackPage = ({ params }) => {
 
   useEffect(() => {
     const fetchBailRequests = async () => {
+    
+        //get token from cookies
+        const token = document.cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1];
+        alert(token);
       try {
-        const res = await axios.get(`${BACKEND_URL}/api/v1/bail-track/${id}`);
+        const res = await axios.get(`${BACKEND_URL}/api/v1/bail-track/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`, 
+            },
+          });
+          
         setBailRequests(res.data.requests || []); 
         setLoading(false);
       } catch (error) {
